@@ -1,0 +1,24 @@
+{
+  "name": "send-thing",
+  "version": "1.0.0",
+  "description": "Send thing to anywhere, in any place, in any context.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevAles/send-thing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevAles/send-thing/issues"
+  },
+  "homepage": "https://github.com/DevAles/send-thing#readme",
+  "devDependencies": {
+    "express": "^4.17.3"
+  }
+}
