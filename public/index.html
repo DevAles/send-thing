@@ -18,10 +18,10 @@
         const body = window.document.body
 
         body.addEventListener('keydown', function(event){
-            const inputMessage = window.document.getElementById('message-input').value
+            const message = window.document.getElementById('message-input').value
 
-            if(event.key === 'Enter' && inputMessage){
-                window.console.log(inputMessage)
+            if(event.key === 'Enter' && message){
+                send(message)
             }
         })
 
@@ -29,7 +29,13 @@
             const userId = socket.id;
 
             window.console.log('Connected to socket with user id: ' + userId)
-        })
+        });
+
+        function send(message){
+            socket.emit('message', function(message){
+                console.log('Send this message ' + message)
+            })
+        }
     </script>
 </body>
 </html>
