@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Send Things</title>
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <h1>Lorem ipsum dolor</h1>
     <input type="text" class="message-input" id="message-input">
     <button type="submit" class="send-message" id="send-message">Send</button>
     
-    <script>
+    <script type="module">
+        const socket = io()
         const body = window.document.body
 
         body.addEventListener('keydown', function(event){
@@ -21,6 +23,12 @@
             if(event.key === 'Enter' && inputMessage){
                 window.console.log(inputMessage)
             }
+        })
+
+        socket.on('connect', function(){
+            const userId = socket.id;
+
+            window.console.log('Connected to socket with user id: ' + userId)
         })
     </script>
 </body>
