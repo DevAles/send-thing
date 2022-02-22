@@ -2,6 +2,7 @@
   "name": "send-thing",
   "version": "1.0.0",
   "description": "Send thing to anywhere, in any place, in any context.",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/DevAles/send-thing#readme",
   "devDependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "socket.io": "^4.4.1"
   }
 }
