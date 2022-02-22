@@ -10,6 +10,9 @@ sockets.on('connection', function(socket){
     const user = socket.id;
 
     console.log('Connected to socket with user: ' + user)
+    socket.on('message', function(message){
+        socket.emit('message', message);
+    })
 })
 
 app.use(express.static(`public`));
