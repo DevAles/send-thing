@@ -14,14 +14,17 @@
     <button type="submit" class="send-message" id="send-message">Send</button>
     
     <script type="module">
-        const socket = io()
+        const socket = io();
         const body = window.document.body
 
         body.addEventListener('keydown', function(event){
             const message = window.document.getElementById('message-input').value
 
             if(event.key === 'Enter' && message){
-                send(message)
+                const userId = socket.id;
+
+                console.log(`${userId}: send message to server`)
+                socket.emit('message', message);
             }
         })
 
@@ -31,11 +34,9 @@
             window.console.log('Connected to socket with user id: ' + userId)
         });
 
-        function send(message){
-            socket.emit('message', function(message){
-                console.log('Send this message ' + message)
-            })
-        }
+        socket.on('message', function(message){
+            console.log('Received message: ' + message)
+        })
     </script>
 </body>
 </html>
