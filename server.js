@@ -11,7 +11,10 @@ sockets.on('connection', function(socket){
 
     console.log('Connected to socket with user: ' + user)
     socket.on('message', function(message){
-        socket.emit('message', message);
+        console.log('Server received message: ' + message)
+
+        sockets.emit('message', message);
+        console.log('Message send to client')
     })
 })
 
