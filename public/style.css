@@ -1,0 +1,20 @@
+body{
+    font-family: helvetica, arial, sans-serif;
+}
+.message-input{
+    width: 90em;
+    height: 3em;
+    position: absolute;
+    top: 90%;
+    box-shadow: 0.2em 0.2em 0.2em #000000;
+    border-radius: 0.5em;
+}
+.send-message{
+    width: 10em;
+    height: 3em;
+    position: absolute;
+    top: 90%;
+    margin-left: 91em;
+    border-radius: 2em;
+    background-color: aquamarine;
+}
