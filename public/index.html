@@ -11,14 +11,16 @@
 </head>
 <body>
     <main class="main-content">
-        <h1>Send Thing</h1>
-
-        <div class="message-displayer" id="message-displayer"></div>
-
-        <div class="send-message" id="send-message">
+        <header>
+            <h1>Send Thing</h1>
+        </header>
+        <article id="message-displayer">
+            <div></div>
+        </article>
+        <article id="send-message">
             <input type="text" class="message-input" id="message-input">
             <button type="submit" class="send-button" id="send-button">Send</button>
-        </div>
+        </article>
     </main>    
     <script type="module">
         let count = 0;
