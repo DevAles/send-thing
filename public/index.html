@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="us">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="height=device-height, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Send Things</title>
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <h1>Lorem ipsum dolor</h1>
-    <input type="text" class="message-input" id="message-input">
-    <button type="submit" class="send-message" id="send-message">Send</button>
-    
+    <main class="main-content">
+        <h1>Send Thing</h1>
+
+        <div class="message-displayer" id="message-displayer"></div>
+
+        <div class="send-message" id="send-message">
+            <input type="text" class="message-input" id="message-input">
+            <button type="submit" class="send-button" id="send-button">Send</button>
+        </div>
+    </main>    
     <script type="module">
+        let count = 0;
         const socket = io();
         const body = window.document.body
 
@@ -22,9 +30,16 @@
 
             if(event.key === 'Enter' && message){
                 const userId = socket.id;
+                const messageData = {
+                    userId: userId,
+                    message: message
+                }
 
-                console.log(`${userId}: send message to server`)
-                socket.emit('message', message);
+                window.document.getElementById('message-input').value = ''
+                console.log(`${messageData.userId}: send message to server`)
+                socket.emit('message', messageData);
+            } else{
+                return;
             }
         })
 
@@ -34,9 +49,21 @@
             window.console.log('Connected to socket with user id: ' + userId)
         });
 
-        socket.on('message', function(message){
-            console.log('Received message: ' + message)
+        socket.on('message', function(messageData){
+            showMessage(messageData.message);
         })
+
+        function showMessage(message){
+            const messageDisplayer = document.getElementById('message-displayer')
+            const messageHTML = 
+            `
+            <div class="message-div">
+                <p class="message-text">${message}</p>    
+            </div>
+            `
+            messageDisplayer.innerHTML += messageHTML
+            messageDisplayer.scroll(10000000, 10000000)
+        }
     </script>
 </body>
 </html>
