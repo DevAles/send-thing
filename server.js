@@ -10,15 +10,15 @@ sockets.on('connection', function(socket){
     const user = socket.id;
 
     console.log('Connected to socket with user: ' + user)
-    socket.on('message', function(message){
-        console.log('Server received message: ' + message)
+    socket.on('message', function(messageData){
+        console.log(`> Server received a message from: ${messageData.userId}: \n ${messageData.message}`)
 
-        sockets.emit('message', message);
-        console.log('Message send to client')
+        sockets.emit('message', messageData);
+        console.log('> Message send to client.')
     })
 })
 
 app.use(express.static(`public`));
 server.listen(8080, function() {
-    console.log('Server listening on port 8080');
+    console.log('> Server listening on port 8080');
 })
