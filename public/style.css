@@ -1,22 +1,46 @@
 body{
     background-color: aquamarine;
     font-family: helvetica, arial, sans-serif;
+    height: 90vh;
+}
+.main-content{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.main-content > header {
+    text-align: center;
+    height: 4em;
+}
+.message-displayer{
+    background-color: cadetblue;
+    height: 18em;
+    overflow: scroll;
 }
 .message-input{
-    width: 90em;
-    height: 3em;
+    width: 88%;
+    height: 6%;
     position: absolute;
     top: 90%;
     box-shadow: 0.2em 0.2em 0.6em #000000;
     border-radius: 0.5em;
     border: 0.2em solid #000000;
 }
-.send-message{
-    width: 10em;
-    height: 3em;
+.send-button{
+    width: 10%;
+    height: 7%;
     position: absolute;
     top: 90%;
     margin-left: 91em;
     border-radius: 2em;
     background-color: rgb(101, 101, 212);
+}
+.message-div{
+    background-color: rgb(247, 247, 156);
+    border-radius: 0.5em;
+    border: 0.1em solid #000000;
+}
+.message-info{
+    font-size: small;
+    color: gray;
 }
