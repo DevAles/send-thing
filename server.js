@@ -7,11 +7,13 @@ const server = http.createServer(app);
 const sockets = new Server(server);
 
 sockets.on('connection', function(socket){
-    const user = socket.id;
+    const userId = socket.id;
 
-    console.log('Connected to socket with user: ' + user)
+    console.log('> Connected to socket with user: ' + userId)
+    
     socket.on('message', function(messageData){
-        console.log(`> Server received a message from: ${messageData.userId}: \n ${messageData.message}`)
+        console.log(`> Server received a message from: ${messageData.username}:
+        ${messageData.message}`)
 
         sockets.emit('message', messageData);
         console.log('> Message send to client.')
