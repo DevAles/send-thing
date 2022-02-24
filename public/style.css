@@ -20,20 +20,11 @@ body{
 .message-input{
     width: 88%;
     height: 6%;
-    position: absolute;
+    position: fixed;
     top: 90%;
     box-shadow: 0.2em 0.2em 0.6em #000000;
     border-radius: 0.5em;
     border: 0.2em solid #000000;
-}
-.send-button{
-    width: 10%;
-    height: 7%;
-    position: absolute;
-    top: 90%;
-    margin-left: 91em;
-    border-radius: 2em;
-    background-color: rgb(101, 101, 212);
 }
 .message-div{
     background-color: rgb(247, 247, 156);

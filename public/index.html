@@ -19,7 +19,6 @@
 
         <article class="send-message" id="send-message">
             <input type="text" class="message-input" id="message-input">
-            <button type="submit" class="send-button" id="send-button">Send</button>
         </article>
     </main> 
     <script type="module">
@@ -27,23 +26,6 @@
         const socket = io();
         const body = window.document.body
         const sendButton = document.getElementById('send-button');
-
-        sendButton.addEventListener('click', function(){
-            const message = window.document.getElementById('message-input').value
-
-            if(message){
-                const messageData = {
-                    username,
-                    message
-                }
-
-                window.document.getElementById('message-input').value = ''
-                console.log(`${messageData.username}: send message to server`)
-                socket.emit('message', messageData);
-            } else{
-                return;
-            }
-        })
 
         body.addEventListener('keydown', function(event){
             const message = window.document.getElementById('message-input').value
