@@ -27,20 +27,27 @@
         const body = window.document.body
         const sendButton = document.getElementById('send-button');
 
+        if (username == null || username.length == 0) {
+            window.location.reload();
+        }
+        
         body.addEventListener('keydown', function(event){
             const message = window.document.getElementById('message-input').value
 
-            if(event.key === 'Enter' && message){
+            if(event.key === 'Enter' && message && username){
+                const userId = socket.id;
+
                 const messageData = {
                     username,
-                    message
+                    message,
+                    userId
                 }
 
                 window.document.getElementById('message-input').value = ''
                 console.log(`${messageData.username}: send message to server`)
                 socket.emit('message', messageData);
             } else{
-                return;
+                return
             }
         })
 
@@ -55,10 +62,14 @@
         })
 
         function showMessage(messageData){
+            const userId = socket.id;
             const messageDisplayer = document.getElementById('message-displayer')
+            const defineClass = messageData.userId == userId ? 
+            'class="my-message-div"': 'class="other-message-div"';
+
             const messageHTML = 
             `
-            <div class="message-div">
+            <div ${defineClass}>
                 <p class="message-text">${messageData.message}</p>
                 <p class="message-info">${messageData.username}</p>
             </div>

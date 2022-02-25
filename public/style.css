@@ -26,12 +26,18 @@ body{
     border-radius: 0.5em;
     border: 0.2em solid #000000;
 }
-.message-div{
-    background-color: rgb(247, 247, 156);
+.my-message-div{
+    background-color: #61d444;
+    border-radius: 0.5em;
+    border: 0.1em solid #000000;
+}
+.other-message-div{
+    background-color: #f7f79c;
     border-radius: 0.5em;
     border: 0.1em solid #000000;
 }
 .message-info{
     font-size: small;
-    color: gray;
+    color: #ff0000;
+    text-shadow: 0.05em 0.05em 0.05em #000000;
 }
