@@ -22,10 +22,11 @@
         </article>
     </main> 
     <script type="module">
-        import displayMessage from "./displayMessage.js"
+        import script from "./script.js"
+        const socket = io();
+        const scriptVar = script(socket);
 
         const username = window.prompt("Input username:")
-        const socket = io();
         const body = window.document.body
         const sendButton = document.getElementById('send-button');
 
@@ -37,19 +38,7 @@
             const message = window.document.getElementById('message-input').value
 
             if(event.key === 'Enter' && message && username){
-                const userId = socket.id;
-
-                const messageData = {
-                    username,
-                    message,
-                    userId
-                }
-
-                window.document.getElementById('message-input').value = ''
-                console.log(`${messageData.username}: send message to server`)
-                socket.emit('message', messageData);
-            } else{
-                return
+                scriptVar.sendMessage(username, message)
             }
         })
 
@@ -62,7 +51,7 @@
         socket.on('message', function(messageData){
             const userId = socket.id;
 
-            displayMessage(messageData, userId);
+            scriptVar.displayMessage(messageData, userId);
         })
     </script>
 </body>
