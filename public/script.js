@@ -1,8 +1,8 @@
 export default function script(socket){
 
-    function displayMessage(messageData, userId){
+    function displayMessage(messageData, username){
         const messageDisplayer = document.getElementById('message-displayer')
-        const defineClass = messageData.userId == userId ? 
+        const defineClass = messageData.username == username ? 
         'class="my-message-div"': 'class="other-message-div"';
     
         const messageHTML = 
@@ -17,12 +17,10 @@ export default function script(socket){
     }
 
     function sendMessage(username, message){
-        const userId = socket.id
         
         const messageData = {
             username,
-            message,
-            userId
+            message
         }
 
         window.document.getElementById('message-input').value = ''

@@ -1,15 +1,44 @@
 import http from 'http';
-import express from 'express';
+import express, { json } from 'express';
 import { Server } from "socket.io";
+import fs from 'fs';
+
+let emptyJson = true;
+const jsonData = fs.readFileSync('./credentials/users.json')
+const jsonParsed = emptyJson ? {} : JSON.parse(jsonData)
 
 const app = express();
 const server = http.createServer(app);
 const sockets = new Server(server);
 
 sockets.on('connection', function(socket){
-    const userId = socket.id;
+    let usernameGlobal;
+    let passwordGlobal;
 
-    console.log('> Connected to socket with user: ' + userId)
+    socket.on('verify-credentials', function(credentials){
+        usernameGlobal = credentials.username
+        passwordGlobal = credentials.password
+        console.log('> Connected to socket with user: ' + credentials.username)
+
+        if (jsonParsed[usernameGlobal] !== undefined) {
+            if (jsonParsed[usernameGlobal] == passwordGlobal) {
+                socket.emit('sucessful-login')
+            } else {
+                socket.emit('invalid-login')
+            }
+        } else {
+            jsonParsed[usernameGlobal] = passwordGlobal
+            socket.emit('sucessful-login')
+        }
+        const jsonString = JSON.stringify(jsonParsed)
+
+        fs.writeFile('./credentials/users.json', jsonString, function(err){
+
+            if (err) throw err
+            console.log('> Add User Credentials')
+            emptyJson = false
+        })
+    })
     
     socket.on('message', function(messageData){
         console.log(`> Server received a message from: ${messageData.username}:
@@ -21,6 +50,6 @@ sockets.on('connection', function(socket){
 })
 
 app.use(express.static(`public`));
-server.listen(8080, function() {
-    console.log('> Server listening on port 8080');
+server.listen(80, function() {
+    console.log('> Server listening on port 80');
 })

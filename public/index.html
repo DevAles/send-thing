@@ -23,35 +23,50 @@
     </main> 
     <script type="module">
         import script from "./script.js"
+        import credentials from "./credentials.js"
+
         const socket = io();
         const scriptVar = script(socket);
+        const credentialsVar = credentials(socket);
+        let logged = false;
 
-        const username = window.prompt("Input username:")
         const body = window.document.body
         const sendButton = document.getElementById('send-button');
-
-        if (username == null || username.length == 0) {
-            window.location.reload();
+        
+        const userCredentials = {
+            username: window.prompt("Input username:"),
+            password: window.prompt("Input password:"),
         }
+        
+        const username = userCredentials.username
+
+        credentialsVar.verifyAndSendToServer(userCredentials)
         
         body.addEventListener('keydown', function(event){
             const message = window.document.getElementById('message-input').value
 
-            if(event.key === 'Enter' && message && username){
+            if(event.key === 'Enter' && username && message && logged){
                 scriptVar.sendMessage(username, message)
             }
         })
 
         socket.on('connect', function(){
-            const userId = socket.id;
-
-            window.console.log('Connected to socket with user id: ' + userId)
+            console.log('Connected to socket with user id: ' + username)
         });
 
         socket.on('message', function(messageData){
-            const userId = socket.id;
+            if (logged){
+                scriptVar.displayMessage(messageData, username);
+            }
+        })
 
-            scriptVar.displayMessage(messageData, userId);
+        socket.on('sucessful-login', function(){
+            logged = true;
+        })
+
+        socket.on('invalid-login', function(){
+            window.alert('Invalid Login, please try again')
+            window.location.reload();
         })
     </script>
 </body>
