@@ -11,7 +11,7 @@ export default function credentials(socket){
             window.alert(err)
             window.location.reload();
         }
-        socket.emit('verify-credentials', userCredentials)
+        socket.emit('send-credentials', userCredentials)
     }
     return {
         verifyAndSendToServer

@@ -15,7 +15,7 @@ sockets.on('connection', function(socket){
     let usernameGlobal;
     let passwordGlobal;
 
-    socket.on('verify-credentials', function(credentials){
+    socket.on('send-credentials', function(credentials){
         usernameGlobal = credentials.username
         passwordGlobal = credentials.password
         console.log('> Connected to socket with user: ' + credentials.username)
