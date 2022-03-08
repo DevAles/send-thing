@@ -54,7 +54,7 @@
             console.log('Connected to socket with user id: ' + username)
         });
 
-        socket.on('send-message', function(messageData){
+        socket.on('message', function(messageData){
             if (logged){
                 scriptVar.displayMessage(messageData, username);
             }

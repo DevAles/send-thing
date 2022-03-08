@@ -11,23 +11,9 @@ export default function credentials(socket){
             window.alert(err)
             window.location.reload();
         }
-        socket.emit('send-credentials', userCredentials)
-    }
-
-    function verifyAndSendToClient(jsonParsed, usernameGlobal, passwordGlobal) {
-        if (jsonParsed[usernameGlobal] !== undefined) {
-            if (jsonParsed[usernameGlobal] == passwordGlobal) {
-                socket.emit('sucessful-login');
-            } else {
-                socket.emit('invalid-login');
-            }
-        } else {
-            jsonParsed[usernameGlobal] = passwordGlobal;
-            socket.emit('sucessful-login');
-        }
+        socket.emit('verify-credentials', userCredentials)
     }
     return {
-        verifyAndSendToServer,
-        verifyAndSendToClient
+        verifyAndSendToServer
     }
 }

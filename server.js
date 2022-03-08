@@ -1,10 +1,9 @@
 import http from 'http';
-import express from 'express';
+import express, { json } from 'express';
 import { Server } from "socket.io";
 import fs from 'fs';
-import credentials from './public/credentials.js';
 
-let emptyJson = true; //Object.keys()
+let emptyJson = true;
 const jsonData = fs.readFileSync('./credentials/users.json')
 const jsonParsed = emptyJson ? {} : JSON.parse(jsonData)
 
@@ -13,18 +12,24 @@ const server = http.createServer(app);
 const sockets = new Server(server);
 
 sockets.on('connection', function(socket){
-    const credentialsVar = credentials(socket)
     let usernameGlobal;
     let passwordGlobal;
 
-    socket.on('send-credentials', function(credentials){
+    socket.on('verify-credentials', function(credentials){
         usernameGlobal = credentials.username
         passwordGlobal = credentials.password
         console.log('> Connected to socket with user: ' + credentials.username)
 
-        credentialsVar.verifyAndSendToClient(jsonParsed,
-            usernameGlobal, passwordGlobal, socket);
-
+        if (jsonParsed[usernameGlobal] !== undefined) {
+            if (jsonParsed[usernameGlobal] == passwordGlobal) {
+                socket.emit('sucessful-login')
+            } else {
+                socket.emit('invalid-login')
+            }
+        } else {
+            jsonParsed[usernameGlobal] = passwordGlobal
+            socket.emit('sucessful-login')
+        }
         const jsonString = JSON.stringify(jsonParsed)
 
         fs.writeFile('./credentials/users.json', jsonString, function(err){
@@ -35,11 +40,11 @@ sockets.on('connection', function(socket){
         })
     })
     
-    socket.on('send-message', function(messageData){
+    socket.on('message', function(messageData){
         console.log(`> Server received a message from: ${messageData.username}:
         ${messageData.message}`)
 
-        socket.emit('sned-message', messageData);
+        sockets.emit('message', messageData);
         console.log('> Message send to client.')
     })
 })

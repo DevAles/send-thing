@@ -25,7 +25,7 @@ export default function script(socket){
 
         window.document.getElementById('message-input').value = ''
         console.log(`${messageData.username}: send message to server`)
-        socket.emit('send-message', messageData)
+        socket.emit('message', messageData)
     }
     return{
         displayMessage,
