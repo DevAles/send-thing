@@ -1,6 +1,6 @@
-export default function script(socket){
+export default function message(socket){
 
-    function displayMessage(messageData, username){
+    function display(messageData, username){
         const messageDisplayer = document.getElementById('message-displayer')
         const defineClass = messageData.username == username ? 
         'class="my-message-div"': 'class="other-message-div"';
@@ -16,7 +16,7 @@ export default function script(socket){
         messageDisplayer.scroll(10000000, 10000000)
     }
 
-    function sendMessage(username, message){
+    function send(username, message){
         
         const messageData = {
             username,
@@ -28,7 +28,7 @@ export default function script(socket){
         socket.emit('message', messageData)
     }
     return{
-        displayMessage,
-        sendMessage
+        display,
+        send
     }
 }

@@ -22,11 +22,11 @@
         </article>
     </main> 
     <script type="module">
-        import script from "./script.js"
+        import message from "./message.js"
         import credentials from "./credentials.js"
 
         const socket = io();
-        const scriptVar = script(socket);
+        const messageVar = message(socket);
         const credentialsVar = credentials(socket);
         let logged = false;
 
@@ -46,7 +46,7 @@
             const message = window.document.getElementById('message-input').value
 
             if(event.key === 'Enter' && username && message && logged){
-                scriptVar.sendMessage(username, message)
+                messageVar.send(username, message)
             }
         })
 
@@ -56,7 +56,7 @@
 
         socket.on('message', function(messageData){
             if (logged){
-                scriptVar.displayMessage(messageData, username);
+                messageVar.display(messageData, username);
             }
         })
 
