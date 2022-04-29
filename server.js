@@ -39,7 +39,7 @@ sockets.on('connection', function(socket){
             emptyJson = false
         })
     })
-    
+
     socket.on('message', function(messageData){
         console.log(`> Server received a message from: ${messageData.username}:
         ${messageData.message}`)
@@ -48,8 +48,28 @@ sockets.on('connection', function(socket){
         console.log('> Message send to client.')
     })
 })
-
 app.use(express.static(`public`));
+
+app.get('/credentials', (req, res) => {
+    res.status(403).send(`
+        <style>
+            body {
+                font-family: sans-serif;
+                font-size: 1.5em;
+                text-align: center;
+            }
+        </style>
+
+        <h1 style="color: red;">403 Forbidden</h1>
+        <p>You don't have permission to access this page.</p>
+    `)
+});
+
+app.get('*', (req, res) => {
+    res.redirect('/');
+    res.end();
+});
+
 server.listen(80, function() {
     console.log('> Server listening on port 80');
 })
